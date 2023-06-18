@@ -1,11 +1,23 @@
 name: CI
 
+# on:
+#   push:
+#     branches:
+#       - master
+#     tags:
+#       - '*'
 on:
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
+  schedule:
+    - cron: 0 8 * * 5
+  watch:
+   types: [started]
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
   pull_request:
     paths-ignore:
       - '**/*.md'
